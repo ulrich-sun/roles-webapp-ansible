@@ -1,2 +1,7 @@
 ---
 # vars file for roles-webapp-ansible
+path_destination: /home/{{ ansible_user }}/index.html
+image_name: httpd
+host_port: 80
+container_port: 80
+container_name: webapp

@@ -1,2 +1,28 @@
 ---
 # tasks file for roles-webapp-ansible
+- name: Copy website file template
+  template:
+    src: index.html.j2
+    dest: "{{ path_destination }}"
+
+- name: Create Apache Container
+  docker_container:
+    name: "{{ container_name }}"
+    image: "{{ image_name }}"
+    restart_policy: always
+    ports:
+      - "{{ host_port }}:{{ container_port }}"
+    volumes:
+      - "{{ path_destination }}":/usr/local/apache2/htdocs/index.html
+  when: "{{ image_name }}" == "httpd"
+
+- name: Create nginx Container
+  docker_container:
+    name: "{{ container_name }}"
+    image: "{{ image_name }}"
+    restart_policy: always
+    ports:
+      - "{{ host_port }}:{{ container_port }}"
+    volumes:
+      - "{{ path_destination }}":/usr/share/nginx/html/index.html
+  when: "{{ image_name }}" == "nginx"

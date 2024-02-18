@@ -1,2 +1,3 @@
 ---
 # defaults file for roles-webapp-ansible
+path_destination: /home/{{ ansible_user }}/index.html
